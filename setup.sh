@@ -1,32 +1,37 @@
-#!/bin/bash
+ï»¿#!/bin/bash
 set -e
 
-echo "=== Óñòàíîâêà BookMergerBot ==="
+echo "=== Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° BookMergerBot ==="
 
-echo "1. Óñòàíîâêà ñèñòåìíûõ ïàêåòîâ..."
+echo "1. Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° ÑÐ¸ÑÑ‚ÐµÐ¼Ð½Ñ‹Ñ… Ð¿Ð°ÐºÐµÑ‚Ð¾Ð²..."
 apt-get update
 apt-get install -y python3 python3-venv unrar unzip p7zip-full
 
-echo "2. Ñîçäàíèå âèðòóàëüíîãî îêðóæåíèÿ Python..."
+echo "2. Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð²Ð¸Ñ€Ñ‚ÑƒÐ°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¾ÐºÑ€ÑƒÐ¶ÐµÐ½Ð¸Ñ Python..."
 python3 -m venv venv
 source venv/bin/activate
 
-echo "3. Óñòàíîâêà Python áèáëèîòåê..."
+echo "3. Ð£ÑÑ‚Ð°Ð½Ð¾Ð²ÐºÐ° Python Ð±Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐº..."
 pip install aiogram rarfile python-dotenv lxml aiofiles
 
-echo "4. Ñîçäàíèå ïóñòîãî .env ôàéëà..."
+echo "4. ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° .env Ñ„Ð°Ð¹Ð»Ð°..."
 if [ ! -f ".env" ]; then
-    echo "BOT_TOKEN=your_bot_token_here" > .env
-    echo "Ñîçäàí .env ôàéë. ÎÒÐÅÄÀÊÒÈÐÓÉ ÅÃÎ È ÓÊÀÆÈ ÒÎÊÅÍ!"
-else
-    echo ".env ôàéë óæå ñóùåñòâóåò"
+    echo "ÐžÐ¨Ð˜Ð‘ÐšÐ: .env Ñ„Ð°Ð¹Ð» Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½ Ð² Ñ€ÐµÐ¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ð¸Ð¸!"
+    echo "Ð¡Ð¾Ð·Ð´Ð°Ð¹Ñ‚Ðµ .env Ñ„Ð°Ð¹Ð» Ñ BOT_TOKEN=Ð²Ð°Ñˆ_Ñ‚Ð¾ÐºÐµÐ½"
+    exit 1
 fi
 
-echo "5. Ñîçäàíèå âðåìåííîé äèðåêòîðèè..."
+if grep -q "your_bot_token_here" .env; then
+    echo "Ð’ÐÐ˜ÐœÐÐÐ˜Ð•: Ð¢Ð¾ÐºÐµÐ½ Ð½Ðµ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐ½ Ð² .env Ñ„Ð°Ð¹Ð»Ðµ!"
+    echo "ÐžÑ‚Ñ€ÐµÐ´Ð°ÐºÑ‚Ð¸Ñ€ÑƒÐ¹Ñ‚Ðµ .env Ð¿ÐµÑ€ÐµÐ´ Ð·Ð°Ð¿ÑƒÑÐºÐ¾Ð¼ Ð±Ð¾Ñ‚Ð°:"
+    echo "nano .env"
+fi
+
+echo "5. Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹ Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸Ð¸..."
 mkdir -p temp
 chmod 777 temp
 
-echo "6. Íàñòðîéêà systemd ñåðâèñà..."
+echo "6. ÐÐ°ÑÑ‚Ñ€Ð¾Ð¹ÐºÐ° systemd ÑÐµÑ€Ð²Ð¸ÑÐ°..."
 cat > /etc/systemd/system/bookmergerbot.service << EOF
 [Unit]
 Description=BookMergerBot
@@ -47,13 +52,11 @@ systemctl daemon-reload
 systemctl enable bookmergerbot
 
 echo ""
-echo "=== ÓÑÒÀÍÎÂÊÀ ÇÀÂÅÐØÅÍÀ ==="
+echo "=== Ð£Ð¡Ð¢ÐÐÐžÐ’ÐšÐ Ð—ÐÐ’Ð•Ð Ð¨Ð•ÐÐ ==="
 echo ""
-echo "ÂÀÆÍÎ: Íàñòðîéòå òîêåí áîòà ïåðåä çàïóñêîì!"
-echo "1. Îòðåäàêòèðóéòå .env ôàéë: nano .env"
-echo "2. Çàìåíèòå 'your_bot_token_here' íà ðåàëüíûé òîêåí"
-echo "3. Ñîõðàíèòå ôàéë: Ctrl+X, Y, Enter"
+echo "ÐŸÑ€Ð¾Ð²ÐµÑ€ÑŒÑ‚Ðµ .env Ñ„Ð°Ð¹Ð»:"
+echo "Ð¢Ð¾ÐºÐµÐ½: $(grep BOT_TOKEN .env)"
 echo ""
-echo "Çàïóñê áîòà: systemctl start bookmergerbot"
-echo "Ïðîâåðêà ñòàòóñà: systemctl status bookmergerbot"
-echo "Ïðîñìîòð ëîãîâ: journalctl -u bookmergerbot -f"
+echo "Ð—Ð°Ð¿ÑƒÑÐº Ð±Ð¾Ñ‚Ð°: systemctl start bookmergerbot"
+echo "ÐŸÑ€Ð¾Ð²ÐµÑ€ÐºÐ° ÑÑ‚Ð°Ñ‚ÑƒÑÐ°: systemctl status bookmergerbot"
+echo "ÐŸÑ€Ð¾ÑÐ¼Ð¾Ñ‚Ñ€ Ð»Ð¾Ð³Ð¾Ð²: journalctl -u bookmergerbot -f"
