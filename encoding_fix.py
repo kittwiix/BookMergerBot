@@ -2,7 +2,6 @@
 import io
 
 def setup_encoding():
-    """Настраивает кодировку для всего приложения"""
     if sys.version_info >= (3, 0):
         sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
         sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8')
