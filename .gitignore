@@ -5,3 +5,5 @@ temp/
 *.log
 .vscode/
 .idea/
+*.pyproj
+*.sln

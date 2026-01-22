@@ -1,8 +1,0 @@
-version: '3.8'
-
-services:
-  book-bot:
-    build: .
-    volumes:
-      - ./temp:/app/temp
-    restart: unless-stopped

@@ -15,16 +15,16 @@ echo "3. Установка Python библиотек..."
 pip install aiogram rarfile python-dotenv lxml aiofiles
 
 echo "4. Проверка .env файла..."
-if [ ! -f ".env" ]; then
-    echo "ОШИБКА: .env файл не найден в репозитории!"
-    echo "Создайте .env файл с BOT_TOKEN=ваш_токен"
+if [ ! -f "config/.env" ]; then
+    echo "ОШИБКА: .env файл не найден в config/.env!"
+    echo "Создайте файл config/.env с BOT_TOKEN=ваш_токен"
     exit 1
 fi
 
-if grep -q "your_bot_token_here" .env; then
-    echo "ВНИМАНИЕ: Токен не настроен в .env файле!"
-    echo "Отредактируйте .env перед запуском бота:"
-    echo "nano .env"
+if grep -q "your_bot_token_here" config/.env; then
+    echo "ВНИМАНИЕ: Токен не настроен в config/.env файле!"
+    echo "Отредактируйте config/.env перед запуском бота:"
+    echo "nano config/.env"
 fi
 
 echo "5. Создание временной директории..."
@@ -40,7 +40,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=$(pwd)
-ExecStart=$(pwd)/venv/bin/python main.py
+ExecStart=$(pwd)/venv/bin/python src/main.py
 Restart=always
 RestartSec=10
 
@@ -54,8 +54,8 @@ systemctl enable bookmergerbot
 echo ""
 echo "=== УСТАНОВКА ЗАВЕРШЕНА ==="
 echo ""
-echo "Проверьте .env файл:"
-echo "Токен: $(grep BOT_TOKEN .env)"
+echo "Проверьте config/.env файл:"
+echo "Токен: $(grep BOT_TOKEN config/.env 2>/dev/null || echo 'Не найден')"
 echo ""
 echo "Запуск бота: systemctl start bookmergerbot"
 echo "Проверка статуса: systemctl status bookmergerbot"
