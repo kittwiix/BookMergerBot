@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\config",
+    "\\src"
   ],
-  "SelectedNode": "\\C:\\Users\\alexd\\Source\\Repos\\BookMergerBot",
+  "SelectedNode": "\\setup.sh",
   "PreviewInSolutionExplorer": false
 }
