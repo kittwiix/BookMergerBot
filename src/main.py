@@ -6,6 +6,9 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
+
 async def main():
     try:
         from config.config import Config
@@ -13,9 +16,10 @@ async def main():
         from aiogram import Bot, Dispatcher
         from aiogram.fsm.storage.memory import MemoryStorage
         
-        bot_data.config = Config()
+        config = Config()
+        bot_data.config = config
         
-        bot = Bot(token=bot_data.config.BOT_TOKEN)
+        bot = Bot(token=config.BOT_TOKEN)
         bot_data.config.bot = bot
         bot_data.bot_instance = bot
         
@@ -40,8 +44,13 @@ async def main():
         sys.exit(1)
 
 if __name__ == '__main__':
-    if not Path('.env').exists():
-        print("❌ Создайте файл .env с BOT_TOKEN=ваш_токен")
+    env_path = PROJECT_ROOT / '.env'
+    
+    if not env_path.exists():
+        print(f"❌ Файл .env не найден!")
+        print(f"📁 Искал по пути: {env_path}")
+        print("ℹ️  Создайте файл .env в корне проекта с содержанием:")
+        print("BOT_TOKEN=ваш_токен")
         sys.exit(1)
     
     asyncio.run(main())

@@ -1,3 +1,12 @@
+.vs/
+*.vsidx
+*.vspcc
+*.vspx
+*.sln
+*.suo
+*.user
+*.vcxproj
+*.vcxproj.filters
 pycache/
 *.pyc
 venv/

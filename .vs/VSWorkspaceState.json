@@ -2,8 +2,8 @@
   "ExpandedNodes": [
     "",
     "\\config",
+    "\\docker",
     "\\src"
   ],
-  "SelectedNode": "\\setup.sh",
   "PreviewInSolutionExplorer": false
 }

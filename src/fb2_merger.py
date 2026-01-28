@@ -2,7 +2,7 @@
 import tempfile
 import shutil
 from pathlib import Path
-from src.models import BookContent, FB2Image
+from models import BookContent, FB2Image
 from typing import List, Dict
 import xml.etree.ElementTree as ET
 from lxml import etree
