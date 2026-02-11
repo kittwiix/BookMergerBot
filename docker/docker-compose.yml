@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  book-bot:
+    build:
+      # Контекст — корень репозитория (там лежат requirements.txt, src, config и т.д.)
+      context: ..
+      # Dockerfile лежит в папке docker
+      dockerfile: docker/Dockerfile
+    volumes:
+      # temp папка рядом с репозиторием будет смонтирована внутрь контейнера
+      - ../temp:/app/temp
+    restart: unless-stopped
+
+
