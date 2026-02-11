@@ -2,16 +2,21 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install all required archive tools
+# Install archive tools
 RUN apt-get update && apt-get install -y \
     unrar \
     unzip \
     p7zip-full \
-    && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/*
 
+# Install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy project sources
 COPY . .
 
-CMD ["python", "main.py"]
+# Run bot
+CMD ["python", "-m", "src.main"]
+
+
