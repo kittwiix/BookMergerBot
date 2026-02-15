@@ -3,15 +3,13 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Install archive tools
-# Пытаемся установить unrar-nonfree, если не получается - используем unrar-free
+# Пытаемся установить unrar (nonfree или free версию)
 RUN apt-get update && \
-    (apt-get install -y unrar-nonfree 2>/dev/null || \
-     apt-get install -y unrar-free 2>/dev/null || \
-     echo "unrar не установлен, поддержка RAR будет отключена") && \
-    apt-get install -y \
-    unzip \
-    p7zip-full \
- && rm -rf /var/lib/apt/lists/*
+    apt-get install -y unzip p7zip-full && \
+    (apt-get install -y unrar-nonfree || \
+     apt-get install -y unrar-free || \
+     echo "unrar недоступен, поддержка RAR будет отключена") && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY requirements.txt .
