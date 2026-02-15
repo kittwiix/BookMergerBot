@@ -20,22 +20,34 @@ class ArchiveHandler:
     
     def _setup_rarfile(self):
         try:
-            possible_paths = [
-                r"C:\Program Files\WinRAR\UnRAR.exe",
-                r"C:\Program Files (x86)\WinRAR\UnRAR.exe", 
-                "unrar.exe"
-            ]
+            import platform
+            is_windows = platform.system() == 'Windows'
             
-            for path in possible_paths:
-                if os.path.exists(path):
-                    rarfile.UNRAR_TOOL = path
+            if is_windows:
+                possible_paths = [
+                    r"C:\Program Files\WinRAR\UnRAR.exe",
+                    r"C:\Program Files (x86)\WinRAR\UnRAR.exe", 
+                    "unrar.exe"
+                ]
+                
+                for path in possible_paths:
+                    if os.path.exists(path):
+                        rarfile.UNRAR_TOOL = path
+                        return
+                
+                result = subprocess.run(['where', 'unrar'], capture_output=True, text=True)
+                if result.returncode == 0:
+                    rarfile.UNRAR_TOOL = result.stdout.strip()
+                    return
+            else:
+                # Linux/Unix: используем which для поиска unrar
+                result = subprocess.run(['which', 'unrar'], capture_output=True, text=True)
+                if result.returncode == 0:
+                    rarfile.UNRAR_TOOL = result.stdout.strip()
                     return
             
-            result = subprocess.run(['where', 'unrar'], capture_output=True, text=True)
-            if result.returncode == 0:
-                rarfile.UNRAR_TOOL = result.stdout.strip()
-            else:
-                self.supported_formats = [ext for ext in self.supported_formats if ext != '.rar']
+            # Если unrar не найден, отключаем поддержку RAR
+            self.supported_formats = [ext for ext in self.supported_formats if ext != '.rar']
                 
         except Exception:
             self.supported_formats = [ext for ext in self.supported_formats if ext != '.rar']
