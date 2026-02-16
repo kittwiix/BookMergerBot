@@ -12,7 +12,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 async def main():
     try:
         from config.config import Config
-        from bot import router, bot_data
+        from src.bot import router, bot_data
         from aiogram import Bot, Dispatcher
         from aiogram.fsm.storage.memory import MemoryStorage
         
@@ -26,8 +26,8 @@ async def main():
         storage = MemoryStorage()
         dp = Dispatcher(storage=storage)
         
-        from archive_handler import ArchiveHandler
-        from fb2_merger import FB2Merger
+        from src.archive_handler import ArchiveHandler
+        from src.fb2_merger import FB2Merger
         
         bot_data.archive_handler = ArchiveHandler(use_file_storage=True)
         bot_data.merger = FB2Merger(max_memory_mb=2048)

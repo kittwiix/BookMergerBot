@@ -2,7 +2,7 @@
 import tempfile
 import shutil
 from pathlib import Path
-from models import BookContent, FB2Image
+from src.models import BookContent, FB2Image
 from typing import List, Dict
 import xml.etree.ElementTree as ET
 from lxml import etree
@@ -17,7 +17,7 @@ class FB2Merger:
     def create_merged_fb2(self, book_contents: list[BookContent], output_path: str, series_title: str = None) -> bool:
         try:
             if not series_title:
-                from models import UserSession
+                from src.models import UserSession
                 temp_session = UserSession(user_id=0)
                 temp_session.book_contents = book_contents
                 series_title = temp_session.get_series_title()

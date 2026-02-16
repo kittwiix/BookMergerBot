@@ -177,7 +177,7 @@ async def update_or_create_status(chat_id: int, session: 'UserSession', force_ne
 
 def get_or_create_session(user_id: int) -> 'UserSession':
     if user_id not in bot_data.sessions:
-        from models import UserSession
+        from src.models import UserSession
         bot_data.sessions[user_id] = UserSession(user_id=user_id)
     
     return bot_data.sessions[user_id]
