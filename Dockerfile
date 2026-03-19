@@ -1,6 +1,8 @@
 FROM python:3.11-slim
 
 WORKDIR /app
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app:/app/src
 
 # Install archive tools
 # Добaвляем non-free репозиторий для unrar-nonfree

@@ -1,4 +1,4 @@
-﻿from dataclasses import dataclass, field
+from dataclasses import dataclass, field
 from typing import List, Dict, Optional
 import os
 from datetime import datetime

@@ -1,4 +1,4 @@
-﻿#!/bin/bash
+#!/bin/bash
 set -e
 
 echo "=== Установка BookMergerBot ==="
@@ -30,16 +30,11 @@ if ! grep -q "BOT_TOKEN=" .env; then
     exit 1
 fi
 
-echo "6. Проверка кодировки .env файла..."
-file -b .env | grep -q "UTF-8" || echo "ВНИМАНИЕ: .env файл не в UTF-8. Пересохраните в UTF-8:"
-echo "  nano .env"
-echo "  Ctrl+O, Enter, Ctrl+X"
-
-echo "7. Создание временной директории..."
+echo "6. Создание временной директории..."
 mkdir -p temp
 chmod 777 temp
 
-echo "8. Настройка systemd сервиса..."
+echo "7. Настройка systemd сервиса..."
 SERVICE_FILE="/etc/systemd/system/bookmergerbot.service"
 WORK_DIR=$(pwd)
 
@@ -89,4 +84,3 @@ echo "Для запуска вручную:"
 echo "  source venv/bin/activate"
 echo "  python main.py"
 echo ""
-echo "Важно: Убедитесь, что .env файл в кодировке UTF-8!"
